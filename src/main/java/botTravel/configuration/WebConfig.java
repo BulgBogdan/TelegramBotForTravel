@@ -1,4 +1,4 @@
-package projectCar.config;
+package botTravel.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,15 +13,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "projectCar")
+@ComponentScan(basePackages = "botTravel")
 public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/error").setViewName("error");
-        registry.addViewController("/loginError").setViewName("loginError");
-    }
 
     @Bean
     ViewResolver viewResolver(){
@@ -34,6 +27,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/res/**").addResourceLocations("/res/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 }

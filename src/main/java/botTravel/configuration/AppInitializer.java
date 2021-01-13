@@ -1,4 +1,4 @@
-package projectCar.config;
+package botTravel.configuration;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -11,7 +11,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{WebSecurityConfig.class};
+        return new Class[0];
     }
 
     @Override
