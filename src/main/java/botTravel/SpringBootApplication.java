@@ -50,9 +50,7 @@ public class SpringBootApplication {
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         entityManagerFactoryBean.setPackagesToScan("botTravel.entity");
-
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-
         return entityManagerFactoryBean;
     }
 
@@ -70,7 +68,6 @@ public class SpringBootApplication {
                 environment.getProperty("spring.jpa.properties.hibernate.search.default.directory_provider"));
         properties.put("hibernate.search.default.indexBase",
                 environment.getProperty("spring.jpa.properties.hibernate.search.default.indexBase"));
-
         return properties;
     }
 
@@ -78,7 +75,6 @@ public class SpringBootApplication {
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-
         return transactionManager;
     }
 

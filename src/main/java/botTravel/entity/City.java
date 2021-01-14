@@ -14,8 +14,8 @@ public class City {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "city_name")
+    private String cityName;
 
     @Column(name = "city_info")
     private String cityInfo;
