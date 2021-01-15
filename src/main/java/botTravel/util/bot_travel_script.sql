@@ -22,3 +22,8 @@ CREATE TABLE IF NOT EXISTS `Bot-Travel`.`cities`
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
+
+insert into `Bot-Travel`.`cities` (city_name, city_info)
+values ('Москва', 'Не забудьте посетить Красную Площадь. Ну а в ЦУМ можно и не заходить)))');
+insert into `Bot-Travel`.`cities` (city_name, city_info)
+values ('Минск', 'Было бы здорово посетить Национальную Библиотеку Беларуси.Но нужно знать о дресс-коде, лучше не одевать красно-белые тона одежды)))');

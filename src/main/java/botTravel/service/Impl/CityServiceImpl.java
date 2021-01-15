@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -19,8 +21,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public City addCity(City city) {
-        City saveCity = cityRepository.saveAndFlush(city);
-        return saveCity;
+        return cityRepository.saveAndFlush(city);
     }
 
     @Override
@@ -30,26 +31,28 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public City getById(int id) {
-        City cityFindById = cityRepository.getOne(id);
-        return cityFindById;
+        return cityRepository.getOne(id);
     }
 
     @Override
     public City getByNameCity(String cityName) {
-        City findCity = cityRepository.findByCityName(cityName);
-        return findCity;
+        return cityRepository.findByCityName(cityName);
     }
 
     @Override
     public City editCity(City city) {
-        City editedCity = cityRepository.saveAndFlush(city);
-        return editedCity;
+        return  cityRepository.saveAndFlush(city);
+    }
+
+    @Override
+    public List<City> getAllCities() {
+        Sort sort = Sort.by("cityName").ascending();
+        return cityRepository.findAll(sort);
     }
 
     @Override
     public Page<City> findPaginated(int page, int pageSize) {
         Sort sort = Sort.by("cityName").ascending();
-
         Pageable pageable = PageRequest.of(page - 1, pageSize, sort);
         return cityRepository.findAll(pageable);
     }

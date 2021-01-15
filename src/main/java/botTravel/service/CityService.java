@@ -3,6 +3,8 @@ package botTravel.service;
 import botTravel.entity.City;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 
 public interface CityService {
 
@@ -15,6 +17,8 @@ public interface CityService {
     City getById(int id);
 
     City editCity(City city);
+
+    List<City> getAllCities();
 
     Page<City> findPaginated(int page, int pageSize);
 
