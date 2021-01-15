@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface CityRepository extends JpaRepository<City, Integer> {
 
     @Query("select c from City c where c.cityName = :cityName")
-    City findByCity(@Param("cityName") String cityName);
+    City findByCityName(@Param("cityName") String cityName);
 
 }

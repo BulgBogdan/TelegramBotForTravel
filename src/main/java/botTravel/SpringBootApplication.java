@@ -9,8 +9,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -22,15 +21,8 @@ public class SpringBootApplication {
     private Environment environment;
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootApplication.class, args);
-
         ApiContextInitializer.init();
-        try {
-            TelegramBotsApi botsApi = new TelegramBotsApi();
-            botsApi.registerBot(new CityGuideTravelBot());
-        } catch (TelegramApiRequestException e) {
-            e.printStackTrace();
-        }
+        SpringApplication.run(SpringBootApplication.class, args);
     }
 
     @Bean(name = "dataSource")

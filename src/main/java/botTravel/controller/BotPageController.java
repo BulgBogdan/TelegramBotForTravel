@@ -21,7 +21,7 @@ public class BotPageController {
 
     @GetMapping("/")
     public ModelAndView allCitiesPage(@RequestParam(defaultValue = "1") int page) {
-        int pageSize = 3;
+        int pageSize = 10;
         Page<City> pages = cityService.findPaginated(page, pageSize);
         List<City> cityList = pages.getContent();
         modelAndView.setViewName("cities");
@@ -46,8 +46,18 @@ public class BotPageController {
 
     @PostMapping("/create")
     public ModelAndView createCity(@ModelAttribute("createCity") City city) {
-        cityService.addCity(city);
-        modelAndView.setViewName("redirect:/");
+        String cityName = city.getCityName();
+        City checkCityInDB = cityService.getByNameCity(cityName);
+
+        if (checkCityInDB == null) {
+            cityService.addCity(city);
+            modelAndView.setViewName("redirect:/");
+        }else{
+            String errorMessage = "Город с таким названием, уже существует.";
+            modelAndView.addObject("error", errorMessage);
+            modelAndView.setViewName("create");
+        }
+
         return modelAndView;
     }
 
