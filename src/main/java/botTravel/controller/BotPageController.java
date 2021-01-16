@@ -48,9 +48,10 @@ public class BotPageController {
     @PostMapping("/create")
     public ModelAndView createCity(@ModelAttribute("createCity") City city) {
         String cityName = city.getCityName();
-        City checkCityInDB = cityService.getByNameCity(cityName);
+        City foundCityById = cityService.getByNameCity(cityName);
 
-        if (checkCityInDB == null) {
+        //is there already such a city
+        if (foundCityById == null) {
             cityService.addCity(city);
             modelAndView.setViewName("redirect:/jsp/cities/");
         }else{
@@ -65,9 +66,9 @@ public class BotPageController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView editCityPage(@PathVariable("id") int id) {
-        City cityFindById = cityService.getById(id);
+        City foundCityById = cityService.getById(id);
         modelAndView.setViewName("edit");
-        modelAndView.addObject("editCity", cityFindById);
+        modelAndView.addObject("editCity", foundCityById);
         return modelAndView;
     }
 

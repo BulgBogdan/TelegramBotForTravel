@@ -4,6 +4,8 @@ import botTravel.entity.City;
 import botTravel.service.CityService;
 import botTravel.service.Impl.CityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,19 +14,27 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
+@PropertySource("classpath:telegram.properties")
 public class CityGuideTravelBot extends TelegramLongPollingBot {
 
     @Autowired
     private CityService cityService = new CityServiceImpl();
 
+    @Value("${bot.name}")
+    private String botName;
+
+    @Value("${bot.token}")
+    private String botToken;
+
     @Override
     public void onUpdateReceived(Update update) {
-        try {
             Message inMessage = update.getMessage();
             SendMessage outMessage = new SendMessage();
 
             String textMessage = inMessage.getText();
             long chatId = inMessage.getChatId();
+
+        try {
 
             if (update.hasMessage() && update.getMessage().hasText()) {
 
@@ -54,6 +64,7 @@ public class CityGuideTravelBot extends TelegramLongPollingBot {
                 }
 
                 execute(outMessage);
+
             } else {
                 outMessage.setChatId(chatId);
                 outMessage.setText("Только города(");
@@ -66,11 +77,11 @@ public class CityGuideTravelBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "";
+        return botName;
     }
 
     @Override
     public String getBotToken() {
-        return "";
+        return botToken;
     }
 }
