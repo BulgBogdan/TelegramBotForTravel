@@ -1,11 +1,13 @@
 package botTravel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Table(name = "cities", schema = "bot-travel")
 public class City {
 

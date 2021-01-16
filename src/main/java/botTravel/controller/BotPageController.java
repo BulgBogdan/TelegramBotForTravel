@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
+@RequestMapping("/jsp/cities")
 public class BotPageController {
 
     @Autowired
@@ -21,7 +22,7 @@ public class BotPageController {
 
     @GetMapping("/")
     public ModelAndView allCitiesPage(@RequestParam(defaultValue = "1") int page) {
-        int pageSize = 10;
+        int pageSize = 5;
         Page<City> pages = cityService.findPaginated(page, pageSize);
         List<City> cityList = pages.getContent();
         modelAndView.setViewName("cities");
@@ -32,7 +33,7 @@ public class BotPageController {
 
             modelAndView.addObject("cityList", cityList);
         } else {
-            modelAndView.setViewName("redirect:/create");
+            modelAndView.setViewName("redirect:/jsp/cities/create");
         }
         return modelAndView;
     }
@@ -51,11 +52,12 @@ public class BotPageController {
 
         if (checkCityInDB == null) {
             cityService.addCity(city);
-            modelAndView.setViewName("redirect:/");
+            modelAndView.setViewName("redirect:/jsp/cities/");
         }else{
             String errorMessage = "Город с таким названием, уже существует.";
             modelAndView.addObject("error", errorMessage);
             modelAndView.setViewName("create");
+            modelAndView.addObject("createCity", city);
         }
 
         return modelAndView;
@@ -72,13 +74,13 @@ public class BotPageController {
     @PostMapping("/edit/{id}")
     public ModelAndView editCity(@ModelAttribute("editCity") City city) {
         cityService.editCity(city);
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/jsp/cities/");
         return modelAndView;
     }
 
     @GetMapping("/delete/{id}")
     public ModelAndView deleteCity(@PathVariable("id") int id) {
-        modelAndView.setViewName("redirect:/");
+        modelAndView.setViewName("redirect:/jsp/cities/");
         cityService.deleteCity(id);
         return modelAndView;
     }
