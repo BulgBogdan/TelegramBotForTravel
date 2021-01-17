@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/jsp/cities")
@@ -52,10 +53,10 @@ public class BotPageController {
         City foundById = cityService.getByName(cityName);
 
         //is there already such a city
-        if (foundById == null) {
+        if (Objects.isNull(foundById)) {
             cityService.add(city);
             modelAndView.setViewName("redirect:/jsp/cities/");
-        }else{
+        } else {
             String errorMessage = "Город с таким названием, уже существует.";
             modelAndView.addObject("error", errorMessage);
             modelAndView.setViewName("create");
@@ -74,7 +75,7 @@ public class BotPageController {
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView editCity(@ModelAttribute("editCity") City city) {
+    public ModelAndView editCity(@ModelAttribute("editCity") City city, @PathVariable String id) {
         cityService.edit(city);
         modelAndView.setViewName("redirect:/jsp/cities/");
         return modelAndView;

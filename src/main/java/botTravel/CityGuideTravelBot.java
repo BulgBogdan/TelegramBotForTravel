@@ -13,6 +13,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.Objects;
+
 @Component
 @PropertySource("classpath:telegram.properties")
 public class CityGuideTravelBot extends TelegramLongPollingBot {
@@ -41,22 +43,22 @@ public class CityGuideTravelBot extends TelegramLongPollingBot {
 
                 City city = cityService.getByName(textMessage);
 
-                String listCity = "";
+                StringBuilder listCity = new StringBuilder();
                 for (City cityFromBase : cityService.getAll()) {
-                    listCity = listCity + cityFromBase.getCityName() + "\n";
+                    listCity.append(cityFromBase.getCityName()).append("\n");
                 }
 
                 //chat where the incoming message
                 outMessage.setChatId(chatId);
 
                 if (textMessage.equals("/start")) {
-                    outMessage.setText("Здравствуй Дорогой друг! " +
+                    outMessage.setText("Здравствуй, Дорогой друг! " +
                             "Я туристический Бот, могу тебе рассказать про города, которые я знаю: " +
                             "\n" + listCity);
                 } else if (textMessage.equalsIgnoreCase("bye")
                         || textMessage.equalsIgnoreCase("пока")) {
                     outMessage.setText("До встречи, добрый человек. Надеюсь, я тебе помог!");
-                } else if (city != null) {
+                } else if (Objects.nonNull(city)) {
                     outMessage.setText(city.getCityInfo());
                 } else {
                     outMessage.setText("К сожалению, я не знаю этого слова.");
