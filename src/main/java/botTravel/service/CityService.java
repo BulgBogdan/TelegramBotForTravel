@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface CityService {
 
-    City addCity(City city);
+    City add(City city);
 
-    void deleteCity(int id);
+    void delete(int id);
 
-    City getByNameCity(String cityName);
+    City getByName(String cityName);
 
     City getById(int id);
 
-    City editCity(City city);
+    City edit(City city);
 
-    List<City> getAllCities();
+    List<City> getAll();
 
     Page<City> findPaginated(int page, int pageSize);
 

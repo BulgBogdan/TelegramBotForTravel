@@ -48,11 +48,12 @@ public class BotPageController {
     @PostMapping("/create")
     public ModelAndView createCity(@ModelAttribute("createCity") City city) {
         String cityName = city.getCityName();
-        City foundCityById = cityService.getByNameCity(cityName);
+
+        City foundById = cityService.getByName(cityName);
 
         //is there already such a city
-        if (foundCityById == null) {
-            cityService.addCity(city);
+        if (foundById == null) {
+            cityService.add(city);
             modelAndView.setViewName("redirect:/jsp/cities/");
         }else{
             String errorMessage = "Город с таким названием, уже существует.";
@@ -66,15 +67,15 @@ public class BotPageController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView editCityPage(@PathVariable("id") int id) {
-        City foundCityById = cityService.getById(id);
+        City foundById = cityService.getById(id);
         modelAndView.setViewName("edit");
-        modelAndView.addObject("editCity", foundCityById);
+        modelAndView.addObject("editCity", foundById);
         return modelAndView;
     }
 
     @PostMapping("/edit/{id}")
     public ModelAndView editCity(@ModelAttribute("editCity") City city) {
-        cityService.editCity(city);
+        cityService.edit(city);
         modelAndView.setViewName("redirect:/jsp/cities/");
         return modelAndView;
     }
@@ -82,7 +83,7 @@ public class BotPageController {
     @GetMapping("/delete/{id}")
     public ModelAndView deleteCity(@PathVariable("id") int id) {
         modelAndView.setViewName("redirect:/jsp/cities/");
-        cityService.deleteCity(id);
+        cityService.delete(id);
         return modelAndView;
     }
 }

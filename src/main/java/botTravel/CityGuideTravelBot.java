@@ -28,43 +28,43 @@ public class CityGuideTravelBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-            Message inMessage = update.getMessage();
-            SendMessage outMessage = new SendMessage();
+        //get and create message
+        Message inMessage = update.getMessage();
+        SendMessage outMessage = new SendMessage();
 
-            String textMessage = inMessage.getText();
-            long chatId = inMessage.getChatId();
+        String textMessage = inMessage.getText();
+        long chatId = inMessage.getChatId();
 
         try {
 
             if (update.hasMessage() && update.getMessage().hasText()) {
 
-                City city = cityService.getByNameCity(textMessage);
+                City city = cityService.getByName(textMessage);
 
                 String listCity = "";
-                for (City cityFromBase : cityService.getAllCities()) {
+                for (City cityFromBase : cityService.getAll()) {
                     listCity = listCity + cityFromBase.getCityName() + "\n";
                 }
 
+                //chat where the incoming message
                 outMessage.setChatId(chatId);
 
                 if (textMessage.equals("/start")) {
                     outMessage.setText("Здравствуй Дорогой друг! " +
                             "Я туристический Бот, могу тебе рассказать про города, которые я знаю: " +
                             "\n" + listCity);
-                }
-                else if (textMessage.equalsIgnoreCase("bye")
+                } else if (textMessage.equalsIgnoreCase("bye")
                         || textMessage.equalsIgnoreCase("пока")) {
                     outMessage.setText("До встречи, добрый человек. Надеюсь, я тебе помог!");
-                }
-                else if (city != null) {
+                } else if (city != null) {
                     outMessage.setText(city.getCityInfo());
-                }
-                else {
+                } else {
                     outMessage.setText("К сожалению, я не знаю этого слова.");
                 }
 
                 execute(outMessage);
 
+                //other than text message
             } else {
                 outMessage.setChatId(chatId);
                 outMessage.setText("Только города(");

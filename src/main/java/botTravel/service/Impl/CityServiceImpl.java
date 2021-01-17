@@ -20,12 +20,12 @@ public class CityServiceImpl implements CityService {
     private CityRepository cityRepository;
 
     @Override
-    public City addCity(City city) {
+    public City add(City city) {
         return cityRepository.saveAndFlush(city);
     }
 
     @Override
-    public void deleteCity(int id) {
+    public void delete(int id) {
         cityRepository.deleteById(id);
     }
 
@@ -35,17 +35,17 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public City getByNameCity(String cityName) {
-        return cityRepository.findByCityName(cityName);
+    public City getByName(String cityName) {
+        return cityRepository.getByName(cityName);
     }
 
     @Override
-    public City editCity(City city) {
+    public City edit(City city) {
         return  cityRepository.saveAndFlush(city);
     }
 
     @Override
-    public List<City> getAllCities() {
+    public List<City> getAll() {
         Sort sort = Sort.by("cityName").ascending();
         return cityRepository.findAll(sort);
     }

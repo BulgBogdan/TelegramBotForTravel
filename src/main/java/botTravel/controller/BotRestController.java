@@ -21,7 +21,7 @@ public class BotRestController {
     @GetMapping("/")
     @ResponseBody
     public List<City> getAll() {
-        return cityService.getAllCities();
+        return cityService.getAll();
     }
 
     @GetMapping("/{id}")
@@ -37,9 +37,9 @@ public class BotRestController {
     @PostMapping("/")
     public ResponseEntity<City> createCity(@RequestBody() City city) {
         //is there already such a city
-        City foundCityById = cityService.getByNameCity(city.getCityName());
-        if (foundCityById == null) {
-            City createCity = cityService.addCity(city);
+        City foundById = cityService.getByName(city.getCityName());
+        if (foundById == null) {
+            City createCity = cityService.add(city);
             if (createCity != null) {
                 URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/{id}")
@@ -57,10 +57,11 @@ public class BotRestController {
     @PutMapping("/{id}")
     public ResponseEntity<City> editCity(@RequestBody City editCity, @PathVariable("id") int id) {
         City city = cityService.getById(id);
+
         city.setCityName(editCity.getCityName());
         city.setCityInfo(editCity.getCityInfo());
 
-        cityService.editCity(editCity);
+        cityService.edit(editCity);
 
         if (city == null) {
             return ResponseEntity.notFound().build();
@@ -71,7 +72,7 @@ public class BotRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<City> deleteCity(@PathVariable("id") int id) {
-        cityService.deleteCity(id);
+        cityService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
