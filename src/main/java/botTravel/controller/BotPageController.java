@@ -2,7 +2,6 @@ package botTravel.controller;
 
 import botTravel.entity.City;
 import botTravel.service.CityService;
-import botTravel.service.Impl.CityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,10 +15,14 @@ import java.util.Objects;
 @RequestMapping("/jsp/cities")
 public class BotPageController {
 
-    @Autowired
-    private CityService cityService = new CityServiceImpl();
+    private CityService cityService;
 
     private ModelAndView modelAndView = new ModelAndView();
+
+    @Autowired
+    public BotPageController(CityService cityService) {
+        this.cityService = cityService;
+    }
 
     @GetMapping("/")
     public ModelAndView allCitiesPage(@RequestParam(defaultValue = "1") int page) {

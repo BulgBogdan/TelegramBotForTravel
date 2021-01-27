@@ -2,7 +2,6 @@ package botTravel.controller;
 
 import botTravel.entity.City;
 import botTravel.service.CityService;
-import botTravel.service.Impl.CityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,12 @@ import java.util.Objects;
 @RequestMapping("/city")
 public class BotRestController {
 
+    private CityService cityService;
+
     @Autowired
-    private CityService cityService = new CityServiceImpl();
+    public BotRestController(CityService cityService) {
+        this.cityService = cityService;
+    }
 
     @GetMapping("/")
     @ResponseBody
