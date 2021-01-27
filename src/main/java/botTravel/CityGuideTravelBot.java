@@ -2,7 +2,6 @@ package botTravel;
 
 import botTravel.entity.City;
 import botTravel.service.CityService;
-import botTravel.service.Impl.CityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -19,14 +18,18 @@ import java.util.Objects;
 @PropertySource("classpath:telegram.properties")
 public class CityGuideTravelBot extends TelegramLongPollingBot {
 
-    @Autowired
-    private CityService cityService = new CityServiceImpl();
+    private CityService cityService;
 
     @Value("${bot.name}")
     private String botName;
 
     @Value("${bot.token}")
     private String botToken;
+
+    @Autowired
+    public CityGuideTravelBot(CityService cityService) {
+        this.cityService = cityService;
+    }
 
     @Override
     public void onUpdateReceived(Update update) {

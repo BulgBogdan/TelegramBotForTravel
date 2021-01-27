@@ -53,10 +53,10 @@ public class BotPageController {
     public ModelAndView createCity(@ModelAttribute("createCity") City city) {
         String cityName = city.getCityName();
 
-        City foundById = cityService.getByName(cityName);
+        City foundedByCityName = cityService.getByName(cityName);
 
         //is there already such a city
-        if (Objects.isNull(foundById)) {
+        if (Objects.isNull(foundedByCityName)) {
             cityService.add(city);
             modelAndView.setViewName("redirect:/jsp/cities/");
         } else {

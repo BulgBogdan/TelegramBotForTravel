@@ -41,8 +41,8 @@ public class BotRestController {
     @PostMapping("/")
     public ResponseEntity<City> createCity(@RequestBody() City city) {
         //is there already such a city
-        City foundById = cityService.getByName(city.getCityName());
-        if (Objects.isNull(foundById)) {
+        City foundedByCityName = cityService.getByName(city.getCityName());
+        if (Objects.isNull(foundedByCityName)) {
             return addCity(city);
         } else {
             return ResponseEntity.noContent().build();

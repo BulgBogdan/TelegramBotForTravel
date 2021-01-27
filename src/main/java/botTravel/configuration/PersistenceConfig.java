@@ -17,8 +17,12 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "botTravel.repository")
 public class PersistenceConfig {
 
-    @Autowired
     private Environment environment;
+
+    @Autowired
+    public PersistenceConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
